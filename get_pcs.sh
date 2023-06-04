@@ -1,6 +1,7 @@
 # Helper scripts that runs plink functions from the associated docker image 
 # Workflow is geared towards producing data ready for PCA and admixture analysis based on 1000 genomes dataset
 # Original data is obtained through associated download script
+set -eu
 
 PFILE="workpath/all_hg38"
 WORKPATH=$( dirname $PFILE )
@@ -14,4 +15,11 @@ docker run --rm -v $PWD:$PWD plink plink --bfile $PWD/$WORKPATH/bed --indep-pair
 
 # Generate pruned dataset
 docker run --rm -v $PWD:$PWD plink plink --bfile $PWD/$WORKPATH/bed --extract $PWD/$WORKPATH/prune.prune.in --make-bed --out $PWD/$WORKPATH/bed_prune --allow-extra-chr
+
+# Convert pruned dataset to pgen
+docker run --rm -v $PWD:$PWD plink plink2 --bfile $PWD/workpath/bed_prune --make-pgen --out $PWD/$WORKPATH/pgen_prune --allow-extra-chr
+
+# Generate principle components 
+mkdir -p $PWD/pcs
+docker run --rm -v $PWD:$PWD plink plink2 --pfile $PWD/$WORKPATH/pgen_prune --freq counts --pca allele-wts --out $PWD/pcs/all_hg38 --allow-extra-chr --maf 0.05
 
