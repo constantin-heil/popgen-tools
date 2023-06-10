@@ -1,3 +1,7 @@
 workpath/
 assay_data/
 pcs/
+
+!workpath/README.md
+!assay_data/README.md
+!pcs/README.md
