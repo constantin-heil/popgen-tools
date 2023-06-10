@@ -1,6 +1,6 @@
-workpath/
-assay_data/
-pcs/
+workpath/*
+assay_data/*
+pcs/*
 
 !workpath/README.md
 !assay_data/README.md
