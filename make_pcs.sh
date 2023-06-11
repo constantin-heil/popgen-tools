@@ -1,3 +1,5 @@
+WORKPATH="workpath"
+
 # Convert pruned dataset to pgen
 docker run --rm -v $PWD:$PWD plink plink2 \
 --bfile $PWD/workpath/bed_prune \
